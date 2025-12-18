@@ -3,6 +3,8 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import axios from "axios";
+import CustomButton from "./CustomButton.jsx";
+import CustomInput from "./CustomInput.jsx";
 //דבר ראשון - לעשות אימפורט לאקסיוז (הספריה שלנו)
 
 function App() {
@@ -47,16 +49,34 @@ function App() {
             }
 
             <div>
-                <div>{/*יצרנו סטייטים עבור שם פרטי ושם משפחה*/}
-                    <input placeholder={"Enter first name"} value={firstName} onChange={(event) => {
+                <div
+                style={{
+                    border: '1px solid grey',//גוון פחות גס ולא צעקני
+                    padding: '10px',//הוספתי מסגרת על מנת שאוכל להבין על מה אני עובדת + הרחקתי את התוכן מהמסגרת (יותר אסתטי)
+                    margin:'40px',//מרחיק את המסגרת החיצונית, תמונה 5 מתארת את זה. אם הייתי רוצה להרחיק רק מלמעלה למשל, הייתי מוסיפה את המילה top לאחר הmargin
+                        //לאחר מכן נרצה לשנות את הגוון של הדף בית במקום לבן נשים גוון בהיר (אפשר לחפש בגוגל גוונים)
+                    backgroundColor: "#FCFBF4",
+                    borderRadius:'30px'
+                    //נגיד יש לי לאמנט כפתור וא ניארצה שהוא כל פעם יהיה מעוצב בכל פעם שאצור כפתור, אז אנחנו ניצור קומפוננטה בקובץ בcss
+                }}>{/*יצרנו סטייטים עבור שם פרטי ושם משפחה*/}
+
+                    <CustomInput//עשינו את אותו דבר עבור CustomInput
+                        placeholder={"Enter first name"}
+                        value={firstName}
+                        onChange={(event) => {
                         setFirstName(event.target.value)
-                    }}/>
-                    <input placeholder={"Enter last name"} value={lastName} onChange={(event) => {
-                        setLastName(event.target.value)
-                    }}/>
-                    <button
+                    }}
+                    />
+                    <CustomInput
+                        placeholder={"Enter last name"}
+                        value={lastName}
+                        onChange={(event) => {
+                            setLastName(event.target.value)
+                        }}/>
+                    {/*מה שעשינו כאן בעצם, העברנו את כל מה שהיה בכפתור לתוך הקאסטום באטן-למה? כדי שהוא יוכל לקבל כל קונספט עיצובי שאנחנו נרצה*/}<CustomButton
+                        text={"Add"}
                         disabled={firstName.length == 0 || lastName.length == 0 || buttonDisabled}
-                        onClick={() => {
+                        action={() => {
                             setButtonDisabled(true);//הופך את הפונקציה להיות טרו (שלא נוכל ללחוץ בטעות כמה פעמים ולהוסיף את אותו היוזר שוב..)
                             //ואנחנו פונים לשרת רק(!) כאשר לוחצים על הכפתור!
                             axios.get("http://localhost:8989/create-user?first=" + firstName + "" +
@@ -72,9 +92,9 @@ function App() {
                                     }
 
                                 })
-                        }}>
-                        Add
-                    </button>
+                        }}/>
+                    {/*ואז כותבים בטקטס מה שאנחנו רוצים שהוא ירנדר*/}
+
                 </div>
                 {
                     users.map(item => {//מרנדר איברים בזה אחר זה... (רק שם פרטי כפי שכתוב בשורה 82)
