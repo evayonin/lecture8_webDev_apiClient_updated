@@ -17,7 +17,7 @@ function App() {
 
     //פונקציה ששולחת את הבקשה מיד כשעולה הקומפוננטה
     const getAllUsers = () => {
-        axios.get("http://localhost:8989/all")//בקשת API שמביאה את כל היוזרים
+        axios.get("http://localhost:3306/all")//בקשת API שמביאה את כל היוזרים
             .then((response) => {
                 setUsers(response.data.userList)//יוזרליסט זה בעצם השם של המערך שקראתי לו, איפה לראות את זה בבקשה עצמה
             })
@@ -79,7 +79,7 @@ function App() {
                         action={() => {
                             setButtonDisabled(true);//הופך את הפונקציה להיות טרו (שלא נוכל ללחוץ בטעות כמה פעמים ולהוסיף את אותו היוזר שוב..)
                             //ואנחנו פונים לשרת רק(!) כאשר לוחצים על הכפתור!
-                            axios.get("http://localhost:8989/create-user?first=" + firstName + "" +
+                            axios.get("http://localhost:3306/create-user?first=" + firstName + "" +
                                 "&last=" + lastName + "&phone=1234567")//שמות ניקח מהסטייטים, לשים לב שבURL שלנו אנחנו כותבים את השדות בדיוק כמו שכתוב בשרת
                                 .then((response) => {
                                     setButtonDisabled(false)//נהפוך אותו שוב לפולס
